@@ -30,8 +30,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_07_070259) do
     t.integer "sender_id"
     t.integer "receiver_id"
     t.string "type"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

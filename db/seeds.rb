@@ -7,18 +7,15 @@ include FactoryBot::Syntax::Methods
 user1 = create(:user)
 user2 = create(:user)
 
-# Create balances
-create(:balance, user: user1, total_credits: 1000, total_debits: 0, current_balance: 1000)
-create(:balance, user: user2, total_credits: 500, total_debits: 0, current_balance: 500)
-
 # Create transactions
-create(:credit_transaction, receiver: user1, amount: 200, description: "Initial deposit")
-create(:debit_transaction, sender: user1, amount: 100, description: "Purchase")
-create(:transfer_transaction, sender: user1, receiver: user2, amount: 200, description: "Payment for services")
+create(:credit_transaction, user: user1, amount: 2000, description: "Initial deposit")
+create(:debit_transaction, user: user1, amount: 100, description: "Purchase")
+# Currently user & sender are same but in future they can be different
+create(:transfer_transaction, sender: user1, receiver: user2, user: user1, amount: 200, description: "Payment for services")
 
 # Generate random transactions for testing
 10.times do
-  create(:credit_transaction, receiver: user1)
-  create(:debit_transaction, sender: user2)
-  create(:transfer_transaction, sender: user1, receiver: user2)
+  create(:credit_transaction, user: user1)
+  create(:debit_transaction, user: user2)
+  create(:transfer_transaction, sender: user1, receiver: user2, user: user1)
 end

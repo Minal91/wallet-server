@@ -11,7 +11,6 @@ FactoryBot.define do
   
       factory :debit_transaction, class: "DebitTransaction" do
         type { "DebitTransaction" }
-        association :sender, factory: :user
       end
   
       factory :transfer_transaction, class: "TransferTransaction" do

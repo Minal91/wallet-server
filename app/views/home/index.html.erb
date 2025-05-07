@@ -1,0 +1,23 @@
+<h1>Welcome, <%= @user.name %>!</h1>
+
+<div>
+  <h2>Your Profile</h2>
+  <p>Email: <%= @user.email %></p>
+  <p>Name: <%= @user.name %></p>
+</div>
+
+<div>
+  <h2>Your Balance</h2>
+  <p>Total Credits: <%= @balance.total_credits %></p>
+  <p>Total Debits: <%= @balance.total_debits %></p>
+  <p>Current Balance: <%= @balance.current_balance %></p>
+</div>
+
+<div>
+  <h2>Navigation</h2>
+  <ul>
+    <li><%= link_to "Transaction History", transaction_history_path %></li>
+    <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+  </ul>
+</div>
