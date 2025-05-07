@@ -1,23 +1,30 @@
-<h1>Welcome, <%= @user.name %>!</h1>
+<div class="home-container">
+  <div class="side-panel">
+    <h2>Navigation</h2>
+    <ul class="navigation-links">
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Transaction History", transactions_path %></li>
+      <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+      <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+    </ul>
+  </div>
 
-<div>
-  <h2>Your Profile</h2>
-  <p>Email: <%= @user.email %></p>
-  <p>Name: <%= @user.name %></p>
-</div>
+  <div class="main-content">
+    <h1 class="welcome-message">Welcome, <%= @user.name %>!</h1>
 
-<div>
-  <h2>Your Balance</h2>
-  <p>Total Credits: <%= @balance.total_credits %></p>
-  <p>Total Debits: <%= @balance.total_debits %></p>
-  <p>Current Balance: <%= @balance.current_balance %></p>
-</div>
+    <div class="profile-container">
+      <div class="profile-section">
+        <h2>Your Profile</h2>
+        <p><strong>Email:</strong> <%= @user.email %></p>
+        <p><strong>Name:</strong> <%= @user.name %></p>
+      </div>
 
-<div>
-  <h2>Navigation</h2>
-  <ul>
-    <li><%= link_to "Transaction History", transaction_history_path %></li>
-    <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
-    <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
-  </ul>
+      <div class="balance-section">
+        <h2>Your Balance</h2>
+        <p><strong>Total Credits:</strong> <%= @balance.total_credits %></p>
+        <p><strong>Total Debits:</strong> <%= @balance.total_debits %></p>
+        <p><strong>Current Balance:</strong> <%= @balance.current_balance %></p>
+      </div>
+    </div>
+  </div>
 </div>

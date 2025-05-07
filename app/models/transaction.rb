@@ -5,4 +5,6 @@ class Transaction < ApplicationRecord
     
     validates :amount, numericality: { greater_than: 0 }
     validates :description, presence: true
+
+    after_commit :update_balances
 end

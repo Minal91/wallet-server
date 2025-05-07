@@ -1,0 +1,23 @@
+<h1>Transfer Money</h1>
+
+<%= form_with model: @transaction, url: transactions_path, local: true do |form| %>
+  <div>
+    <%= form.label :receiver_id, "Select User" %>
+    <%= form.collection_select :receiver_id, @users, :id, :name, prompt: "Choose a user" %>
+  </div>
+
+  <div>
+    <%= form.label :amount %>
+    <%= form.number_field :amount, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_field :description, placeholder: "Reason for transfer" %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :type, value: "TransferTransaction" %>
+    <%= form.submit "Transfer Money" %>
+  </div>
+<% end %>
