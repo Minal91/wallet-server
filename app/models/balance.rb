@@ -8,9 +8,13 @@ class Balance < ApplicationRecord
   end
 
   def debit(amount)
-    self.current_balance -= amount
-    self.total_debits += amount
-    save!
+    if self.current_balance >= amount
+      self.current_balance -= amount
+      self.total_debits += amount
+      save!
+    else
+      errors.add(:base, "Insufficient balance")
+      false
+    end
   end
-
 end

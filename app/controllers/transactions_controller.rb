@@ -1,29 +1,25 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: %i[update edit show destroy]
+  before_action :set_transaction, only: %i[update edit show]
   before_action :authenticate_user!
   def index
-    @user = current_user
-    @transactions = @user&.transactions&.order(created_at: :desc)&.to_a || []
+    @transactions = current_user.transactions&.order(created_at: :desc)&.to_a || []
   end
 
   def create
-    @user = current_user
-    @transaction = Transaction.new(transaction_params)
-    @transaction.user = @user
-
-    if @transaction.save
+    @transaction = current_user.transactions.new(transaction_params)
+    if @transaction.valid? && @transaction.save
       redirect_to transactions_path, notice: 'Transaction was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_content, errors: @transaction.errors.full_messages
     end
   end
 
   def update
     @transaction = Transaction.find(params[:id])
-    if @transaction.update(transaction_params)
+    if @transaction.valid? && @transaction.update(transaction_params)
       redirect_to transactions_path, notice: 'Transaction was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_content, errors: @transaction.errors.full_messages
     end
   end
 
@@ -36,9 +32,6 @@ class TransactionsController < ApplicationController
   end
 
   def show
-  end
-
-  def destroy
   end
 
   private
