@@ -3,6 +3,7 @@ module Api
     class TransactionsController < ApplicationController
       before_action :authenticate_user!
       before_action :set_transaction, only: %i[update show]
+      around_action :lock_balance, only: %i[create update]
 
       def index
         @transactions = current_user.transactions&.order(created_at: :desc)&.to_a || []
@@ -44,6 +45,16 @@ module Api
         unless @transaction
           render json: { error: 'Transaction not found' }, status: :not_found
         end
+      end
+
+      def lock_balance
+        current_user.balance.with_lock do
+          # This block will lock the user's balance for the duration of the transaction
+          # Any concurrent requests will wait until this block is released
+          yield
+        end
+      rescue ActiveRecord::LockWaitTimeout
+        render json: { error: 'Transaction failed due to concurrent modification. Please try again.' }, status: :conflict
       end
     end
   end

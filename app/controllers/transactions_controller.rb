@@ -6,6 +6,7 @@ class TransactionsController < ApplicationController
   end
 
   def create
+    
     @transaction = current_user.transactions.new(transaction_params)
     if @transaction.valid? && @transaction.save
       redirect_to transactions_path, notice: 'Transaction was successfully created.'
@@ -15,7 +16,6 @@ class TransactionsController < ApplicationController
   end
 
   def update
-    @transaction = Transaction.find(params[:id])
     if @transaction.valid? && @transaction.update(transaction_params)
       redirect_to transactions_path, notice: 'Transaction was successfully updated.'
     else
