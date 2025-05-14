@@ -1,5 +1,5 @@
 class TransactionSerializer < ActiveModel::Serializer
-  attributes :amount, :type, :created_at, :updated_at
+attributes :amount, :type, :created_at, :updated_at
   attribute :id, key: :transaction_id
 
   def amount
